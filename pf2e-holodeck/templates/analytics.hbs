@@ -9,7 +9,7 @@
                     <option value="current" {{#if (eq selectedEncounter 'current')}}selected{{/if}}>{{localize "PF2E-HOLODECK.Forensics.CurrentLive"}}</option>
                     <option value="exploration" style="color: #44ff44;" {{#if (eq selectedEncounter 'exploration')}}selected{{/if}}>{{localize "PF2E-HOLODECK.Forensics.LiveExplore"}}</option>
                     
-                    <optgroup label="{{localize "PF2E-HOLODECK.Forensics.OptCampaign"}}">
+                    <optgroup label="{{localize 'PF2E-HOLODECK.Forensics.OptCampaign'}}">
                         <option value="meta" style="font-weight: bold; color: #ffaa00;" {{#if (eq selectedEncounter 'meta')}}selected{{/if}}>{{localize "PF2E-HOLODECK.Forensics.MetaCombat"}}</option>
                         <option value="meta-explore" style="font-weight: bold; color: #44ff44;" {{#if (eq selectedEncounter 'meta-explore')}}selected{{/if}}>{{localize "PF2E-HOLODECK.Forensics.MetaExplore"}}</option>
                         {{#if isGM}}
@@ -17,16 +17,16 @@
                         {{/if}}
                     </optgroup>
 
-                    <optgroup label="{{localize "PF2E-HOLODECK.Forensics.OptCombat"}}">
+                    <optgroup label="{{localize 'PF2E-HOLODECK.Forensics.OptCombat'}}">
                     {{#each historyKeys}}<option value="{{this}}" {{#if (eq ../selectedEncounter this)}}selected{{/if}}>{{this}}</option>{{/each}}
                     </optgroup>
 
-                    <optgroup label="{{localize "PF2E-HOLODECK.Forensics.OptExplore"}}">
+                    <optgroup label="{{localize 'PF2E-HOLODECK.Forensics.OptExplore'}}">
                     {{#each exploreKeys}}<option value="{{this}}" {{#if (eq ../selectedEncounter this)}}selected{{/if}}>{{this}}</option>{{/each}}
                     </optgroup>
 
                     {{#if isGM}}
-                    <optgroup label="{{localize "PF2E-HOLODECK.Forensics.OptSim"}}">
+                    <optgroup label="{{localize 'PF2E-HOLODECK.Forensics.OptSim'}}">
                     {{#each simKeys}}<option value="{{this}}" {{#if (eq ../selectedEncounter this)}}selected{{/if}}>{{this}}</option>{{/each}}
                     </optgroup>
                     {{/if}}
@@ -841,10 +841,10 @@
                         <label style="font-weight: bold; color: #aa44ff; text-transform: uppercase;"><i class="fas fa-search"></i> {{localize "PF2E-HOLODECK.Forensics.SelectOperative"}}</label>
                         <select id="dossier-actor-select" style="padding: 6px; background: #111; color: #eee; border: 1px solid #555; border-radius: 4px; flex: 1; max-width: 400px; font-size: 1.1em;">
                             <option value="">{{localize "PF2E-HOLODECK.Forensics.AwaitSelection"}}</option>
-                            <optgroup label="{{localize "PF2E-HOLODECK.Forensics.PartyAllies"}}" style="color: #44aaff;">
+                            <optgroup label="{{localize 'PF2E-HOLODECK.Forensics.PartyAllies'}}" style="color: #44aaff;">
                                 {{#each dossier.partyActors}}<option value="{{this}}" style="color: #eee;" {{#if (eq ../dossier.selectedActor this)}}selected{{/if}}>{{this}}</option>{{/each}}
                             </optgroup>
-                            <optgroup label="{{localize "PF2E-HOLODECK.Forensics.EnemiesMonsters"}}" style="color: #ff6666;">
+                            <optgroup label="{{localize 'PF2E-HOLODECK.Forensics.EnemiesMonsters'}}" style="color: #ff6666;">
                                 {{#each dossier.enemyActors}}<option value="{{this}}" style="color: #eee;" {{#if (eq ../dossier.selectedActor this)}}selected{{/if}}>{{this}}</option>{{/each}}
                             </optgroup>
                         </select>
@@ -954,7 +954,7 @@
                                         </div>
                                         <div style="display: flex; gap: 20px; font-size: 0.9em; color: #bbb; text-align: right; align-items: center;">
                                             <span title="Total Combat Time"><i class="far fa-clock" style="color: #aaa;"></i> {{durationStr}}</span>
-                                            <span title="{{localize "PF2E-HOLODECK.Forensics.DamageDealt"}}"><i class="fas fa-crosshairs" style="color: #ff6666;"></i> {{damageDealt}}</span>
+                                            <span title="{{localize "PF2E-HOLODECK.Forensics.DamageDealt'}}"><i class="fas fa-crosshairs" style="color: #ff6666;"></i> {{damageDealt}}</span>
                                             <span title="Damage Mitigated"><i class="fas fa-shield-alt" style="color: #44aaff;"></i> {{mitigated}}</span>
                                             <span title="Kills"><i class="fas fa-skull" style="color: #ffaa00;"></i> {{kills}}</span>
                                             <span title="{{localize "PF2E-HOLODECK.Forensics.AvgD20"}} Roll"><i class="fas fa-dice-d20" style="color: #44ffaa;"></i> {{avgD20}}</span>

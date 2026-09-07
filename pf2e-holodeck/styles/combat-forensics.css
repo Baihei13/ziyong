@@ -57,7 +57,7 @@
     color: #f0f0f0 !important; /* BUMPED FROM GRAY TO OFF-WHITE */
     font-size: 1em; /* BUMPED SIZE */
     font-weight: 600;
-    text-transform: uppercase;
+    text-transform: none;
     letter-spacing: 0.5px;
     opacity: 0.95;
 }
@@ -117,7 +117,7 @@
     font-size: 1.5em !important; /* SIGNIFICANTLY BIGGER */
     font-weight: 800;
     color: #ffaa00;
-    text-transform: uppercase;
+    text-transform: none;
     letter-spacing: 1.5px;
     margin-bottom: 12px !important;
     text-shadow: 2px 2px 2px #000;

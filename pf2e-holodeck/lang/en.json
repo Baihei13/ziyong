@@ -166,5 +166,12 @@
   "PF2E-HOLODECK.Forensics.TauntsUsed": "Taunts Used",
   "PF2E-HOLODECK.Forensics.HuntedShots": "Hunted Shots",
   "PF2E-HOLODECK.Forensics.WellspringSurges": "Wellspring Surges",
-  "PF2E-HOLODECK.Forensics.AlwaysWayShort": "Always in the Way"
+  "PF2E-HOLODECK.Forensics.AlwaysWayShort": "Always in the Way",
+  "PF2E-HOLODECK.Diff.Trivial": "Trivial",
+  "PF2E-HOLODECK.Diff.Low": "Low",
+  "PF2E-HOLODECK.Diff.Moderate": "Moderate",
+  "PF2E-HOLODECK.Diff.Severe": "Severe",
+  "PF2E-HOLODECK.Diff.Extreme": "Extreme",
+  "PF2E-HOLODECK.Diff.Meta": "Meta Aggregate",
+  "PF2E-HOLODECK.Diff.NoPC": "N/A (No PCs)"
 }

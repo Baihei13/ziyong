@@ -2876,16 +2876,16 @@ class CombatForensicsApp extends foundry.applications.api.HandlebarsApplicationM
             });
         }
 
-        let difficultyStr = "Trivial";
+        let difficultyStr = CF_L("Diff.Trivial");
         let diffColor = "#44ff44"; 
         let totalXP = 0, partyLevel = 1, partySize = 4;
         let truePcs = pcs.filter(p => p.type === "character"); 
         
         if (isMeta) {
-            difficultyStr = "Meta Aggregate";
+            difficultyStr = CF_L("Diff.Meta");
             diffColor = "#ffaa00";
         } else if (truePcs.length === 0) {
-            difficultyStr = "N/A (No PCs)";
+            difficultyStr = CF_L("Diff.NoPC");
             diffColor = "#888";
         } else {
             partySize = truePcs.length;
@@ -2908,11 +2908,11 @@ class CombatForensicsApp extends foundry.applications.api.HandlebarsApplicationM
             let adj = partySize - 4;
             let trivial = 40 + (adj * 10), low = 60 + (adj * 15), mod = 80 + (adj * 20), sev = 120 + (adj * 30), ext = 160 + (adj * 40);
 
-            if (totalXP >= ext) { difficultyStr = "Extreme"; diffColor = "#ff4444"; } 
-            else if (totalXP >= sev) { difficultyStr = "Severe"; diffColor = "#ff6600"; } 
-            else if (totalXP >= mod) { difficultyStr = "Moderate"; diffColor = "#ffaa00"; } 
-            else if (totalXP >= low) { difficultyStr = "Low"; diffColor = "#aaff44"; } 
-            else { difficultyStr = "Trivial"; diffColor = "#44ff44"; }
+            if (totalXP >= ext) { difficultyStr = CF_L("Diff.Extreme"); diffColor = "#ff4444"; } 
+            else if (totalXP >= sev) { difficultyStr = CF_L("Diff.Severe"); diffColor = "#ff6600"; } 
+            else if (totalXP >= mod) { difficultyStr = CF_L("Diff.Moderate"); diffColor = "#ffaa00"; } 
+            else if (totalXP >= low) { difficultyStr = CF_L("Diff.Low"); diffColor = "#aaff44"; } 
+            else { difficultyStr = CF_L("Diff.Trivial"); diffColor = "#44ff44"; }
         }
 
         return { 

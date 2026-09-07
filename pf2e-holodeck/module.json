@@ -2,7 +2,7 @@
   "id": "pf2e-holodeck",
   "title": "PF2e Holodeck (汉化)",
   "description": "用于独立遭遇测试的多状态存档/读档环境。（中文汉化版）",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "compatibility": {
     "minimum": "14",
     "verified": "14",
@@ -30,13 +30,23 @@
     }
   ],
   "manifest": "https://raw.githubusercontent.com/Baihei13/ziyong/main/pf2e-holodeck/module.json",
-  "download": "https://github.com/Baihei13/ziyong/releases/download/4.1.1/pf2e-holodeck-4.1.1.zip",
+  "download": "https://github.com/Baihei13/ziyong/releases/download/4.1.2/pf2e-holodeck-4.1.2.zip",
   "flags": {},
   "languages": [
     {
       "lang": "en",
       "name": "English",
       "path": "lang/en.json"
+    },
+    {
+      "lang": "cn",
+      "name": "中文（简体）",
+      "path": "lang/cn.json"
+    },
+    {
+      "lang": "zh-CN",
+      "name": "简体中文",
+      "path": "lang/zh-CN.json"
     },
     {
       "lang": "zh-Hans",

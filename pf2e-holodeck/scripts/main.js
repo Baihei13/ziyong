@@ -8,7 +8,16 @@ function L(key, data) {
 
 let holodeckApp;
 
-Hooks.once('init', () => {
+Hooks.once('init', async () => {
+    // 汉化版：强制合并简体中文词条（Foundry 简体语言码多为 cn，仅注册 zh-Hans 会回退英文）
+    try {
+        const zh = await foundry.utils.fetchJsonWithTimeout("modules/pf2e-holodeck/lang/cn.json");
+        foundry.utils.mergeObject(game.i18n.translations, zh);
+        if (game.i18n._fallback) foundry.utils.mergeObject(game.i18n._fallback, zh);
+    } catch (err) {
+        console.error("PF2e Holodeck | Failed to load Chinese translations", err);
+    }
+
     // Database 1: The Public Campaign Logs
     game.settings.register("pf2e-holodeck", "combatHistory", {
         name: "Combat History Logs",
