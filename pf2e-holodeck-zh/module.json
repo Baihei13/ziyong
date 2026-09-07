@@ -1,0 +1,33 @@
+{
+  "id": "pf2e-holodeck-zh",
+  "title": "PF2e Holodeck 简体中文",
+  "description": "为 PF2e Holodeck 提供简体中文界面（独立汉化，不修改原版模组）。需同时启用 PF2e Holodeck。",
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14",
+    "maximum": "14"
+  },
+  "authors": [
+    {
+      "name": "Baihei13",
+      "flags": {}
+    }
+  ],
+  "esmodules": [
+    "scripts/main.js"
+  ],
+  "relationships": {
+    "requires": [
+      {
+        "id": "pf2e-holodeck",
+        "type": "module",
+        "compatibility": {}
+      }
+    ]
+  },
+  "manifest": "https://raw.githubusercontent.com/Baihei13/ziyong/main/pf2e-holodeck-zh/module.json",
+  "download": "https://github.com/Baihei13/ziyong/releases/download/holodeck-zh-1.0.0/pf2e-holodeck-zh-1.0.0.zip",
+  "url": "https://github.com/Baihei13/ziyong",
+  "flags": {}
+}
