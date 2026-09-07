@@ -1,0 +1,32 @@
+{
+  "id": "pf2e-holodeck",
+  "title": "PF2e Holodeck",
+  "description": "A robust, multi-state save and load environment for isolated encounter testing.",
+  "version": "4.1",
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14",
+    "maximum": "14"
+  },
+  "authors": [
+    {
+      "name": "Sean Wright",
+      "flags": {}
+    }
+  ],
+  "esmodules": [
+    "scripts/main.js"
+  ],
+  "styles": [
+    {
+      "src": "styles/holodeck.css"
+    },
+    {
+      "src": "styles/combat-forensics.css"
+    }
+  ],
+  "manifest": "https://raw.githubusercontent.com/Baihei13/ziyong/main/pf2e-holodeck/module.json",
+  "download": "https://github.com/Baihei13/ziyong/releases/download/holodeck-4.1/pf2e-holodeck-4.1.zip",
+  "url": "https://github.com/Baihei13/ziyong",
+  "flags": {}
+}
