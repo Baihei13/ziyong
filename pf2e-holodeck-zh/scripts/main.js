@@ -269,6 +269,102 @@ function isHolodeckUi(app, element) {
   return /Danger Room|Combat Forensics|Holodeck/i.test(String(title));
 }
 
+/**
+ * 战斗识别修复（猴补原版 CombatParser）：
+ * 1) 密语/盲消息（metagame_secretDamage）原先整段跳过 → 实战承伤全丢
+ * 2) origin 可能是纯 UUID 字符串
+ * 3) 友好 disposition 的 NPC（玩家控猎人）算盟友
+ * 4) 中文「结算摘要」等 AoE 文案
+ */
+function patchCombatRecognition() {
+  const CP = window.CombatParser;
+  if (!CP) {
+    console.warn("PF2e Holodeck 简体中文 | CombatParser 尚未就绪，稍后重试识别补丁");
+    return false;
+  }
+
+  const allyOf = (actDoc, combatant = null) => {
+    if (!actDoc) return false;
+    if (actDoc.type === "character" || actDoc.type === "familiar") return true;
+    if (actDoc.alliance === "party") return true;
+    try {
+      if (game.users.some((u) => !u.isGM && actDoc.testUserPermission(u, "OWNER"))) return true;
+    } catch (e) {}
+    try {
+      const tok = combatant?.token ?? actDoc.getActiveTokens?.()?.[0]?.document;
+      const disp = tok?.disposition ?? actDoc.prototypeToken?.disposition;
+      if (disp === CONST.TOKEN_DISPOSITIONS.FRIENDLY) return true;
+    } catch (e) {}
+    return false;
+  };
+
+  if (typeof CP.seedCombatants === "function" && !CP.__zhSeedPatched) {
+    const origSeed = CP.seedCombatants.bind(CP);
+    CP.seedCombatants = function (combat) {
+      origSeed(combat);
+      if (!combat?.combatants) return;
+      for (const c of combat.combatants) {
+        const actorDoc = c.actor;
+        if (!actorDoc) continue;
+        const rawName = CP.getCanonicalName(actorDoc, c.name);
+        const actorName = CP.resolveOwner(rawName, actorDoc, c.name);
+        const entry = this.ledger?.actors?.[actorName];
+        if (entry && allyOf(actorDoc, c)) entry.isAlly = true;
+      }
+    };
+    CP.__zhSeedPatched = true;
+  }
+
+  if (typeof CP.parseMessage === "function" && !CP.__zhParsePatched) {
+    const origParse = CP.parseMessage.bind(CP);
+    CP.parseMessage = function (message) {
+      try {
+        if (!message || message.__holodeckParsed) return;
+        const flags = message?.flags?.pf2e || message?.flags?.sf2e || {};
+        const rawOrigin = flags.origin;
+        if (rawOrigin && typeof rawOrigin === "string") {
+          flags.origin = { uuid: rawOrigin };
+          if (message.flags?.pf2e) message.flags.pf2e.origin = flags.origin;
+          else if (message.flags?.sf2e) message.flags.sf2e.origin = flags.origin;
+        }
+      } catch (e) {}
+      return origParse(message);
+    };
+    CP.__zhParsePatched = true;
+  }
+
+  if (!Hooks.__zhHolodeckSecretFix) {
+    // 抢在原版 hook 之前：把「密语且非 holodeck」改成允许 GM/收件人解析
+    // 原版 hook 在 parser.js 末尾注册；我们在 ready 再注册的话顺序更晚。
+    // 做法：用 libWrapper 风格包装不可行时，直接再挂一个同名逻辑的前置过滤器——
+    // 原版是 `if (isSecret && !isHolodeck) return;`，我们无法删掉它。
+    // 因此必须改原版 parser.js，或在 createChatMessage 用更早优先级重新 parse。
+    Hooks.on("createChatMessage", (message) => {
+      if (!message?.id) return;
+      if (message.flags?.core?.initiativeRoll) return;
+      const isSecret = (message.whisper && message.whisper.length > 0) || message.blind;
+      const isHolodeck = canvas.scene?.getFlag("pf2e-holodeck", "active");
+      if (!isSecret || isHolodeck) return; // 非密语：原版已处理
+
+      const recipients = message.whisper || [];
+      const canSee = game.user.isGM || recipients.includes(game.user.id);
+      if (!canSee) return;
+
+      // 原版因 isSecret 提前 return 了；这里补跑一遍解析
+      try {
+        window.CombatParser?.parseMessage?.(message);
+        if (window.combatForensicsInstance?.rendered) window.combatForensicsInstance.render();
+      } catch (err) {
+        console.error("PF2e Holodeck 简体中文 | 密语伤害补解析失败", err);
+      }
+    });
+    Hooks.__zhHolodeckSecretFix = true;
+  }
+
+  console.log("PF2e Holodeck 简体中文 | 战斗识别补丁已生效");
+  return true;
+}
+
 Hooks.once("init", () => {
   console.log("PF2e Holodeck 简体中文 | 独立汉化层已加载");
   patchSceneControls();
@@ -280,6 +376,10 @@ Hooks.once("ready", () => {
     return;
   }
   wrapNotifications();
+  // CombatParser 在 holodeck 的 esmodule 里定义；ready 时通常已有
+  if (!patchCombatRecognition()) {
+    setTimeout(() => patchCombatRecognition(), 1500);
+  }
 });
 
 Hooks.on("renderApplicationV2", (app, element) => {
